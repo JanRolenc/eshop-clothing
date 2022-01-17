@@ -10,7 +10,9 @@ const MenuItem = ({ title, imageUrl, size, history, linkUrl, match }) => {//size
         <div
             className={`${size} menu-item`}
             //aby bylo kam push/presmerovat, doplnime do directory/sections linkUrl
+            //push tady neni metoda na pole, ale metoda na presmerovani routy
             onClick={() => history.push(`${match.url}${linkUrl}`)}>
+
             <div style={{ backgroundImage: `url(${imageUrl})` }}
                 className='background-image'
             />
