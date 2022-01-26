@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';//toto potrebuji kvuli "po klik na icon 
 import { ReactComponent as Logo } from '../../assets/crown.svg'; //nutne k vytvoreni nove komponenty Logo
 import './header.style.scss';
 import { auth } from '../../firebase/firebase.utils';
+import { connect } from 'react-redux';//toto importujeme, kdyz zavadime redux
 
 const Header = ({ currentUser }) => (
     <div className="header">
@@ -24,5 +25,10 @@ const Header = ({ currentUser }) => (
         </div>
     </div>
 )
+//kvuli redux zavadime: (nazev mapStateToProps je zavedeny standard, ale muze to byt jakykoliv nazev)
+const mapStateToProps = state => ({//state vola root-reducer, ten pak user-reducer...?
+    currentUser: state.user.currentUser
+});
 
-export default Header;
+// export default Header; po zavedeni redux:
+export default connect(mapStateToProps)(Header);

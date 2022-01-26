@@ -30,10 +30,7 @@ class SignUp extends React.Component {
         }
 
         try {//pouzijeme dalsi z auth metod: 
-            const { user } = await auth.createUserWithEmailAndPassword(
-                email,
-                password
-            );
+            const { user } = await auth.createUserWithEmailAndPassword(email, password);
 
             await createUserProfileDocument(user, { displayName });
 
@@ -57,7 +54,7 @@ class SignUp extends React.Component {
         const { displayName, email, password, confirmPassword } = this.state;
         return (
             <div className='sign-up'>
-                <h2 className='title'>I do not have a account</h2>
+                <h2 className='title'>I do not have an account yet</h2>
                 <span>Sign up with your email and password</span>
                 <form className='sign-up-form' onSubmit={this.handleSubmit}>
                     <FormInput
@@ -78,7 +75,7 @@ class SignUp extends React.Component {
                     />
                     <FormInput
                         type='password'
-                        name='new-password'
+                        name='password'
                         value={password}
                         onChange={this.handleChange}
                         label='Password'

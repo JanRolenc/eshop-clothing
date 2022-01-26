@@ -2,7 +2,7 @@ import React from 'react';
 import './sign-in.style.scss';
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
-import { signInWithGoogle } from '../../firebase/firebase.utils';
+import { auth, signInWithGoogle } from '../../firebase/firebase.utils';
 
 class SignIn extends React.Component {
     constructor(props) {
@@ -12,11 +12,19 @@ class SignIn extends React.Component {
             email: ''
         }
     }
-    //funkce vymaze hodnoty po odeslani
-    handleSubmit = event => {
-        event.preventDefault();
 
-        this.setState({ email: '', password: '' });
+    handleSubmit = async event => {
+        event.preventDefault();//funkce vymaze hodnoty po odeslani
+
+        //po zprovozneni firestore, kde se ukladaji data useru, muzeme pouzit dalsi funkci firebase pro signin - auth.signInWithEmailAndPassword
+        const { email, password } = this.state;
+        try {
+            await auth.signInWithEmailAndPassword(email, password);
+            this.setState({ email: '', password: '' });
+        } catch (error) {
+            console.log('error sign in');
+        }
+
     };
     //fce komponovana jako univerzalni ke zpracovani jak emailu tak passwordu
     handleChange = event => {
@@ -41,7 +49,7 @@ class SignIn extends React.Component {
                     />
                     {/* <label>Email</label> muzeme odstranit*/}
                     <FormInput
-                        name='current-password'
+                        name='password'
                         type='password'
                         value={this.state.password}
                         handleChange={this.handleChange}
@@ -51,7 +59,7 @@ class SignIn extends React.Component {
                     {/* <label>Password</label> muzeme odstranit */}
                     <div className='buttons'>
                         <CustomButton type='submit'> Sign in </CustomButton>
-                        <CustomButton onClick={signInWithGoogle} isGoogleSignIn>
+                        <CustomButton type='button' onClick={signInWithGoogle} isGoogleSignIn>
                             Sign in with Google
                         </CustomButton>
                         {/* isGoogleSignIn atribut pry vraci true, pokud mu neprirazujeme hodnotu */}
