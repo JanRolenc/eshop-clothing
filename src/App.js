@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import './App.css';
@@ -69,13 +69,29 @@ class App extends React.Component {
         <Switch>
           <Route exact path='/' component={HomePage} />
           <Route path='/shop' component={ShopPage} />
-          <Route path='/signin' component={SignInAndSignUpPage} />
+          {/* <Route path='/signin' component={SignInAndSignUpPage} /> po zavedeni Redirect menime na: */}
+          <Route exact path='/signin' render=
+            {
+              () => this.props.currentUser ?
+                (
+                  <Redirect to='/' />
+                )
+                :
+                (
+                  <SignInAndSignUpPage />
+                )
+            }
+          />
         </Switch>
       </div>
     );
   }
 }
 
+//toto zavadime spolecne s Redirect - nechceme, aby prihlaseny uzivatel mel stale pristup do signin routy
+const mapStateToProps = ({ user }) => ({
+  currentUser: user.currentUser
+})
 
 const mapDispatchToProps = dispatch => ({
   setCurrentUser: user => dispatch(setCurrentUser(user))
@@ -83,6 +99,7 @@ const mapDispatchToProps = dispatch => ({
 
 // export default App;//po zavedeni redux toto nahrazujeme viz nize:
 export default connect(
-  null,
+  // null,//misto null dame po zavedeni Redirect mapStateToProps
+  mapStateToProps,
   mapDispatchToProps)
   (App);//jak toto zavedeme, vymazeme constructor vyse
