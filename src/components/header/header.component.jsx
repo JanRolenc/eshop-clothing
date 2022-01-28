@@ -4,8 +4,10 @@ import { ReactComponent as Logo } from '../../assets/crown.svg'; //nutne k vytvo
 import './header.style.scss';
 import { auth } from '../../firebase/firebase.utils';
 import { connect } from 'react-redux';//toto importujeme, kdyz zavadime redux
+import CartIcon from '../cart-icon/cart-icon.component';
+import CartDropdown from '../cart-dropdown/cart-dropdown.component';
 
-const Header = ({ currentUser }) => (
+const Header = ({ currentUser, hidden }) => (
     <div className="header">
         <Link className='logo-container' to="/">
             <Logo className='logo' />
@@ -22,12 +24,22 @@ const Header = ({ currentUser }) => (
             }
 
             {/* <img className="option" src="./shopping_icon.png" alt="icon" /> */}
+            <CartIcon />
         </div>
+        {
+            hidden ? null : <CartDropdown />
+        }
+
     </div>
-)
+);
 //kvuli redux zavadime: (nazev mapStateToProps je zavedeny standard, ale muze to byt jakykoliv nazev)
-const mapStateToProps = state => ({//state vola root-reducer, ten pak user-reducer...?
-    currentUser: state.user.currentUser
+// const mapStateToProps = state => ({//state vola root-reducer, ten pak user-reducer...?
+//     currentUser: state.user.currentUser
+// });
+//po zavedeni CartDropdown comp menime nasledovne:
+const mapStateToProps = ({ user: { currentUser }, cart: { hidden } }) => ({//pouzil pokrocilejsi destructuring pro nested values
+    currentUser,
+    hidden//musime doplnit nahoru k const Header = ({ currentUser })
 });
 
 // export default Header; po zavedeni redux:
