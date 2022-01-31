@@ -18,5 +18,5 @@ export const addItemToCart = (cartItems, cartItemToAdd) => {
     }
     //pokud item se stejnym id v kosiku neni, tak vrat pole s cartItems a object s nove pridanou polozkou a mnozstvim 1
     //quantity je poprve pridano uz u prvni polozky, kdy logicky neprobehne if blok
-    return [...cartItems, { ...cartItemToAdd, quantity: 1 }];
+    return [...cartItems, { ...cartItemToAdd, quantity: 1 }];//asi slouceni pomoci spread operatoru
 }

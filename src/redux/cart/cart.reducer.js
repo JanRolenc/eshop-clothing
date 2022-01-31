@@ -17,8 +17,8 @@ const cartReducer = (state = INITIAL_STATE, action) => { //nejdriv bude state in
         case CartActionTypes.ADD_ITEM:
             return {
                 ...state,
-                // cartItems: [...state.cartItems, action.payload] //slouci puvodni a nove items; toto nasledne menime po zavedeni cart.utils, 
-                //kdy dynamicky menime pocet shodnych polozek v kosiku
+                // cartItems: [...state.cartItems, action.payload] //slouci puvodni a nove items; toto nasledne menime po 
+                //zavedeni cart.utils, kdy dynamicky menime pocet shodnych polozek v kosiku
                 cartItems: addItemToCart(state.cartItems, action.payload)
             };
         default:
