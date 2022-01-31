@@ -8,8 +8,10 @@ const CollectionPreview = ({ title, items }) => (
         <div className='preview' >
             {items//toto se bude neustale menit/znovu nacitat pri kazdem render/refresh
                 .filter((item, index) => index < 4)
-                .map(({ id, ...otherItemProps }) => (
-                    <CollectionItem key={id} {...otherItemProps} />
+                /* .map(({ id, ...otherItemProps }) => (//z nejakeho duvodu chce od 128./7.45m provest zmeny */
+                .map((item) => (
+                    /* <CollectionItem key={id} {...otherItemProps} />//z nejakeho duvodu (pry aby se dal cely item dispatch dal, napr. do collection-item)chce od 128./7.45m provest zmeny */
+                    <CollectionItem key={item.id} item={item} />
                 ))}
 
         </div>
