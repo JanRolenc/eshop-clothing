@@ -7,6 +7,8 @@ import CartItem from '../cart-item/cart-item.component';
 
 import './cart-dropdown.style.scss';
 
+import { selectCartItems } from '../../redux/cart/cart.selectors';//po zavedeni selectoru muzeme import a dale upravit nize mapStateToProps
+
 
 const CartDropdown = ({ cartItems }) => (//cartItems jsme si zalozili v cart.reducer
     <div className='cart-dropdown'>
@@ -19,8 +21,13 @@ const CartDropdown = ({ cartItems }) => (//cartItems jsme si zalozili v cart.red
     </div>
 );
 //pro pristup k cart-item.comp:
-const mapStateToProps = ({ cart: { cartItems } }) => ({//cartItems vytahujeme z cart.reducer
-    cartItems
+// ({ cart: { cartItems } })----- vezme cely state, vytahne z nej cart a z nej pak items
+// const mapStateToProps = ({ cart: { cartItems } }) => ({//cartItems vytahujeme z cart.reducer 
+//     cartItems
+// });
+//po zavedeni a import selectoru muzeme upravit:
+const mapStateToProps = (state) => ({
+    cartItems: selectCartItems(state)
 });
 // export default CartDropdown;
 export default connect(mapStateToProps)(CartDropdown);
